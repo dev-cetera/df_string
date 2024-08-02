@@ -28,8 +28,8 @@ gh auth login
 git init
 git add .
 git commit -m "Initial commit"
-gh repo create df_string --public
-git remote add origin https://github.com/robmllze/df_string.git
+gh repo create YOUR_PROJECT_NAME --public
+git remote add origin https://github.com/robmllze/YOUR_PROJECT_NAME.git
 git push -u origin main
 ```
 
