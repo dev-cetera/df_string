@@ -9,7 +9,7 @@
 
 name: df_string
 description: A package designed to extend Dart strings by offering additional functionality.
-version: 0.1.0
+version: 0.1.1
 repository: https://github.com/robmllze/df_string
 
 ## -----------------------------------------------------------------------------
