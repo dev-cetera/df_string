@@ -1,8 +1,8 @@
 //.title
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //
-// Dart/Flutter (DF) Packages by DevCetra.com & contributors. See MIT LICENSE
-// file in the root directory.
+// Dart/Flutter (DF) Packages by DevCetra.com & contributors. See LICENSE file
+// in root directory.
 //
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
@@ -36,15 +36,13 @@ extension StringCaseConversionsOnStringExtension on String {
   String toUpperDotCase() => this.toDotCase().toUpperCase();
 
   /// Converts the string to path/case.
-  String toPathCase([String separator = '/']) =>
-      this._extractLowercaseComponents().join(separator);
+  String toPathCase([String separator = '/']) => this._extractLowercaseComponents().join(separator);
 
   /// Converts the string to camelCase.
   String toCamelCase() => this.toPascalCase().withFirstLetterAsLowerCase();
 
   /// Converts the string to PascalCase.
-  String toPascalCase() =>
-      this._extractLowercaseComponents().map((e) => e.capitalize()).join();
+  String toPascalCase() => this._extractLowercaseComponents().map((e) => e.capitalize()).join();
 
   /// Extracts and returns a list of lowercase components from the string.
   ///
