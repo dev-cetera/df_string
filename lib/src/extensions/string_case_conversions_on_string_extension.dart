@@ -9,42 +9,43 @@
 
 extension StringCaseConversionsOnStringExtension on String {
   /// Converts the string to UPPER_SNAKE_CASE;
-  String toUpperSnakeCase() => this.toSnakeCase().toUpperCase();
+  String toUpperSnakeCase() => toSnakeCase().toUpperCase();
 
   /// Converts the string to lower_snake_case (alias for [toSnakeCase]).
-  String toLowerSnakeCase() => this.toSnakeCase();
+  String toLowerSnakeCase() => toSnakeCase();
 
   /// Converts the string to snake_case.
-  String toSnakeCase() => this._extractLowercaseComponents().join('_');
+  String toSnakeCase() {
+    final noUpperCase = isUpperCase ? toLowerCase() : this;
+    return noUpperCase._extractLowercaseComponents().join('_');
+  }
 
   /// Converts the string to lower-kebab-case.
-  String toUpperKebabCase() => this.toKebabCase().toUpperCase();
+  String toUpperKebabCase() => toKebabCase().toUpperCase();
 
   /// Converts the string to lower-kebab-case (alias for [toKebabCase]).
-  String toLowerKebabCase() => this.toKebabCase();
+  String toLowerKebabCase() => toKebabCase();
 
   /// Converts the string to kebab-case.
-  String toKebabCase() => this._extractLowercaseComponents().join('-');
+  String toKebabCase() => _extractLowercaseComponents().join('-');
 
   /// Converts the string to dot.case.
-  String toDotCase() => this._extractLowercaseComponents().join('.');
+  String toDotCase() => _extractLowercaseComponents().join('.');
 
   /// Converts the string to lower.dot.case. (alias for [toDotCase]).
-  String toLowerDotCase() => this.toDotCase();
+  String toLowerDotCase() => toDotCase();
 
   /// Converts the string to UPPER.DOT.CASE.
-  String toUpperDotCase() => this.toDotCase().toUpperCase();
+  String toUpperDotCase() => toDotCase().toUpperCase();
 
   /// Converts the string to path/case.
-  String toPathCase([String separator = '/']) =>
-      this._extractLowercaseComponents().join(separator);
+  String toPathCase([String separator = '/']) => _extractLowercaseComponents().join(separator);
 
   /// Converts the string to camelCase.
-  String toCamelCase() => this.toPascalCase().withFirstLetterAsLowerCase();
+  String toCamelCase() => toPascalCase().withFirstLetterAsLowerCase();
 
   /// Converts the string to PascalCase.
-  String toPascalCase() =>
-      this._extractLowercaseComponents().map((e) => e.capitalize()).join();
+  String toPascalCase() => _extractLowercaseComponents().map((e) => e.capitalize()).join();
 
   /// Extracts and returns a list of lowercase components from the string.
   ///
@@ -66,11 +67,11 @@ extension StringCaseConversionsOnStringExtension on String {
   List<String> _extractLowercaseComponents({
     Set<String> special = const {'.'},
   }) {
-    if (this.isEmpty) return [this];
+    if (isEmpty) return [this];
     final words = <String>[];
     var currentWord = StringBuffer();
     String? a;
-    for (var n = 0; n < this.length; n++) {
+    for (var n = 0; n < length; n++) {
       final b = this[n];
       final bIsLetter = b._isLetter || special.contains(b);
       if (bIsLetter || b._isDigit) {
@@ -81,7 +82,7 @@ extension StringCaseConversionsOnStringExtension on String {
               (aIsLetter && b._isDigit) ||
               (a.isUpperCase &&
                   b.isUpperCase &&
-                  (n + 1 < this.length && this[n + 1].isLowerCase))) {
+                  (n + 1 < length && this[n + 1].isLowerCase))) {
             words.add(currentWord.toString().toLowerCase());
             currentWord = StringBuffer();
           }
@@ -106,36 +107,35 @@ extension StringCaseConversionsOnStringExtension on String {
   bool get _isLetter => RegExp(r'^[a-zA-Z]$').hasMatch(this);
 
   /// Returns `true` if the string is all uppercase.
-  bool get isUpperCase => this == this.toUpperCase();
+  bool get isUpperCase => this == toUpperCase();
 
   /// Returns `true` if the string is all lowercase.
-  bool get isLowerCase => this == this.toLowerCase();
+  bool get isLowerCase => this == toLowerCase();
 
   /// Capitalizes the first letter of the string.
   ///
   /// The same as [withFirstLetterAsUpperCase].
-  String capitalize() => this.withFirstLetterAsUpperCase();
+  String capitalize() => withFirstLetterAsUpperCase();
 
   /// Converts the first letter of the string to uppercase.
   ///
   /// The same as [capitalize].
   String withFirstLetterAsUpperCase() {
-    if (this.isEmpty) return this;
-    if (this.length == 1) return this.toUpperCase();
-    return this[0].toUpperCase() + this.substring(1);
+    if (isEmpty) return this;
+    if (length == 1) return toUpperCase();
+    return this[0].toUpperCase() + substring(1);
   }
 
   /// Converts the first letter of the string to lowercase.
   String withFirstLetterAsLowerCase() {
-    if (this.isEmpty) return this;
-    if (this.length == 1) return this.toLowerCase();
-    return this[0].toLowerCase() + this.substring(1);
+    if (isEmpty) return this;
+    if (length == 1) return toLowerCase();
+    return this[0].toLowerCase() + substring(1);
   }
 
   /// Capitalizes each word in the string.
   String withCapitalizedWords() {
-    return this
-        .trim()
+    return trim()
         .split(RegExp(r'[- ]+'))
         .map((e) => e.trim().toLowerCase().capitalize())
         .join(' ');

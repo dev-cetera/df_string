@@ -147,6 +147,6 @@ extension ConvertOnStringCaseTypeExtension on StringCaseType {
 
   /// Converts [values] to a specific case type.
   Iterable<String> convertAll(Iterable<String> values) {
-    return values.map((e) => this.convert(e));
+    return values.map((e) => convert(e));
   }
 }

@@ -10,6 +10,6 @@
 extension NullIfEmptyOnStringX on String {
   /// Returns null if the String is empty, otherwise returns the String.
   String? get nullIfEmpty {
-    return this.isEmpty ? null : this;
+    return isEmpty ? null : this;
   }
 }
