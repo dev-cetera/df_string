@@ -1,10 +1,14 @@
 # Changelog
 
+## [0.2.3]
+
+- Released @ 11/2024 (UTC)
+- chore: Update CI/CD script
+
 ## [0.2.2]
 
 - Released @ 11/2024 (UTC)
 - docs: Update readme and comments
-- chore: Update CI/CD script
 
 ## [0.2.1]
 

@@ -12,7 +12,7 @@
 
 name: df_string
 description: A package designed to extend Dart strings by offering additional functionality.
-version: 0.2.2
+version: 0.2.3
 repository: https://github.com/robmllze/df_string
 funding:
   - https://www.buymeacoffee.com/robmllze
