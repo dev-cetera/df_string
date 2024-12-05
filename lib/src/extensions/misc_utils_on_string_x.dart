@@ -10,10 +10,17 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-extension MiscUtilsOnStringExtension on String {
-  /// Truncates the string to the given [length].
-  String truncToLength(int length) {
-    return (this.length > length ? substring(0, length).trim() : this);
+extension MiscUtilsOnStringX on String {
+  /// Truncates the string to the given [length]. Specify [ellipsis] to append
+  /// to he truncated string if it is shorter than [length], e.g.
+  /// 'Hello World'.truncToLength(5, ellipsis: '...') => 'Hello...'.
+  String truncToLength(
+    int length, {
+    String ellipsis = '',
+  }) {
+    final temp = (this.length > length ? substring(0, length).trim() : this);
+    if (temp.length < length) return temp + ellipsis;
+    return temp;
   }
 
   /// Replaces all whitespace characters with [replace].
@@ -25,7 +32,11 @@ extension MiscUtilsOnStringExtension on String {
   /// [startIndex].
   ///
   /// See: [replaceFirst].
-  String replaceLast(Pattern from, String replace, [int startIndex = 0]) {
+  String replaceLast(
+    Pattern from,
+    String replace, [
+    int startIndex = 0,
+  ]) {
     final match = from.allMatches(this, startIndex).lastOrNull;
     if (match == null) return this;
     final lastIndex = match.start;

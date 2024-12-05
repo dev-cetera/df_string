@@ -10,7 +10,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-extension ToTrimmedOrNullOnObjectExtension on Object {
+extension ToTrimmedOrNullOnObjectX on Object {
   /// Converts the input to a string and trims it or returns `null` if the
   /// result is empty.
   String? toTrimmedOrNull() {

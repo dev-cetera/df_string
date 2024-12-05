@@ -10,7 +10,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'extensions/string_case_conversions_on_string_extension.dart';
+import 'extensions/string_case_conversions_on_string_x.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -24,6 +24,7 @@ enum StringCaseType {
   UPPER_SNAKE_CASE(_UPPER_SNAKE_CASE),
   LOWER_KEBAB_CASE(_LOWER_KEBAB_CASE),
   UPPER_KEBAB_CASE(_UPPER_KEBAB_CASE),
+  CAPITALIZED_KEBAB_CASE(_UPPER_KEBAB_CASE),
   CAMEL_CASE(_CAMEL_CASE),
   PASCAL_CASE(_PASCAL_CASE),
   LOWER_DOT_CASE(_LOWER_DOT_CASE),
@@ -34,43 +35,16 @@ enum StringCaseType {
   //
   //
 
-  final String message;
+  final String code;
 
   //
   //
   //
 
-  const StringCaseType(this.message);
+  const StringCaseType(this.code);
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-
-/// Camel case example.
-const CAMEL_CASE_EXAMPLE = 'camelCase';
-
-/// Lower dot case example.
-const LOWER_DOT_CASE_EXAMPLE = 'lower.dot.case';
-
-/// Lower kebab case example.
-const LOWER_KEBAB_CASE_EXAMPLE = 'lower-kebab-case';
-
-/// Lower snake case example.
-const LOWER_SNAKE_CASE_EXAMPLE = 'lower_snake_case';
-
-/// Pascal case example.
-const PASCAL_CASE_EXAMPLE = 'PascalCase';
-
-/// Path case example.
-const PATH_CASE_EXAMPLE = 'path/case';
-
-/// Upper dot case example.
-const UPPER_DOT_CASE_EXAMPLE = 'UPPER.DOT.CASE';
-
-/// Upper kebab case example.
-const UPPER_KEBAB_CASE_EXAMPLE = 'UPPER-KEBAB-CASE';
-
-/// Upper snake case example.
-const UPPER_SNAKE_CASE_EXAMPLE = 'UPPER_SNAKE_CASE';
 
 /// A key representing camel case.
 const CAMEL_CASE = 'CAMEL_CASE';
@@ -80,6 +54,9 @@ const LOWER_DOT_CASE = 'LOWER_DOT_CASE';
 
 /// A key representing lower kebab case.
 const LOWER_KEBAB_CASE = 'LOWER_KEBAB_CASE';
+
+/// A key representing lower kebab case.
+const CAPITALIZED_KEBAB_CASE = 'CAPITALIZED_KEBAB_CASE';
 
 /// A key representing lower snake case.
 const LOWER_SNAKE_CASE = 'LOWER_SNAKE_CASE';
@@ -107,6 +84,7 @@ const _PASCAL_CASE = PASCAL_CASE;
 const _PATH_CASE = PATH_CASE;
 const _UPPER_DOT_CASE = UPPER_DOT_CASE;
 const _UPPER_KEBAB_CASE = UPPER_KEBAB_CASE;
+const _CAPITALIZED_KEBAB_CASE = CAPITALIZED_KEBAB_CASE;
 const _UPPER_SNAKE_CASE = UPPER_SNAKE_CASE;
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -125,6 +103,8 @@ String convertToStringCaseType(
       return value.toLowerKebabCase();
     case StringCaseType.UPPER_KEBAB_CASE:
       return value.toUpperKebabCase();
+    case StringCaseType.CAPITALIZED_KEBAB_CASE:
+      return value.toCapitalizedKebabCase();
     case StringCaseType.CAMEL_CASE:
       return value.toCamelCase();
     case StringCaseType.PASCAL_CASE:
@@ -142,7 +122,7 @@ String convertToStringCaseType(
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-extension ConvertOnStringCaseTypeExtension on StringCaseType {
+extension ConvertOnStringCaseTypeX on StringCaseType {
   /// Converts [value] to a specific case type.
   String convert(String value) {
     return convertToStringCaseType(value, this);
