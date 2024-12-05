@@ -46,13 +46,15 @@ extension StringCaseConversionsOnStringX on String {
   String toUpperDotCase() => toDotCase().toUpperCase();
 
   /// Converts the string to path/case.
-  String toPathCase([String separator = '/']) => _extractLowercaseComponents().join(separator);
+  String toPathCase([String separator = '/']) =>
+      _extractLowercaseComponents().join(separator);
 
   /// Converts the string to camelCase.
   String toCamelCase() => toPascalCase().withFirstLetterAsLowerCase();
 
   /// Converts the string to PascalCase.
-  String toPascalCase() => _extractLowercaseComponents().map((e) => e.capitalize()).join();
+  String toPascalCase() =>
+      _extractLowercaseComponents().map((e) => e.capitalize()).join();
 
   /// Extracts and returns a list of lowercase components from the string.
   ///
@@ -87,7 +89,9 @@ extension StringCaseConversionsOnStringX on String {
           if ((a.isLowerCase && b.isUpperCase) ||
               (a._isDigit && bIsLetter) ||
               (aIsLetter && b._isDigit) ||
-              (a.isUpperCase && b.isUpperCase && (n + 1 < length && this[n + 1].isLowerCase))) {
+              (a.isUpperCase &&
+                  b.isUpperCase &&
+                  (n + 1 < length && this[n + 1].isLowerCase))) {
             words.add(currentWord.toString().toLowerCase());
             currentWord = StringBuffer();
           }
@@ -140,6 +144,9 @@ extension StringCaseConversionsOnStringX on String {
 
   /// Capitalizes each word in the string.
   String withCapitalizedWords() {
-    return trim().split(RegExp(r'[- ]+')).map((e) => e.trim().toLowerCase().capitalize()).join(' ');
+    return trim()
+        .split(RegExp(r'[- ]+'))
+        .map((e) => e.trim().toLowerCase().capitalize())
+        .join(' ');
   }
 }
