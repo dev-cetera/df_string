@@ -90,10 +90,7 @@ const _UPPER_SNAKE_CASE = UPPER_SNAKE_CASE;
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
 /// Converts a string to a specific case type.
-String convertToStringCaseType(
-  String value,
-  StringCaseType? stringCaseType,
-) {
+String convertToStringCaseType(String value, StringCaseType? stringCaseType) {
   switch (stringCaseType) {
     case StringCaseType.LOWER_SNAKE_CASE:
       return value.toLowerSnakeCase();

@@ -5,7 +5,7 @@ void main() {
   group('StringCaseConversionsOnStringX', () {
     // --- Test Data ---
     // A map of various input strings to their expected component parts.
-    final Map<String, List<String>> componentTests = {
+    final componentTests = <String, List<String>>{
       // Standard cases
       'hello world': ['hello', 'world'],
       'hello-world': ['hello', 'world'],
@@ -40,8 +40,12 @@ void main() {
         test('should correctly extract components from "$input"', () {
           if (expected.isEmpty) {
             // An empty component list should result in an empty snake_case string.
-            expect(input.toSnakeCase(), isEmpty,
-                reason: 'An empty/whitespace input should result in an empty output string.');
+            expect(
+              input.toSnakeCase(),
+              isEmpty,
+              reason:
+                  'An empty/whitespace input should result in an empty output string.',
+            );
           } else {
             // For all non-empty cases, the original logic works perfectly.
             expect(input.toSnakeCase().split('_'), equals(expected));
@@ -181,10 +185,15 @@ void main() {
       });
       test('withCapitalizedWords', () {
         expect('hello world'.withCapitalizedWords(), equals('Hello World'));
-        expect('  leading-and trailing_spaces  '.withCapitalizedWords(),
-            equals('Leading And Trailing Spaces'));
+        expect(
+          '  leading-and trailing_spaces  '.withCapitalizedWords(),
+          equals('Leading And Trailing Spaces'),
+        );
         expect('ALL CAPS'.withCapitalizedWords(), equals('All Caps'));
-        expect('multiple--delimiters'.withCapitalizedWords(), equals('Multiple Delimiters'));
+        expect(
+          'multiple--delimiters'.withCapitalizedWords(),
+          equals('Multiple Delimiters'),
+        );
         expect(''.withCapitalizedWords(), equals(''));
       });
     });

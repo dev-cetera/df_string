@@ -35,7 +35,8 @@ extension StringCaseConversionsOnStringX on String {
 
   /// Converts the string to Capitalized-Kebab-Case.
   /// Example: 'helloWorld' -> 'Hello-World'
-  String toCapitalizedKebabCase() => _extractComponents().map((e) => e.capitalize()).join('-');
+  String toCapitalizedKebabCase() =>
+      _extractComponents().map((e) => e.capitalize()).join('-');
 
   /// Converts the string to dot.case.
   String toDotCase() => _extractComponents().join('.');
@@ -50,7 +51,8 @@ extension StringCaseConversionsOnStringX on String {
 
   /// Converts the string to path/case.
   /// Example: 'helloWorld' -> 'hello/world'
-  String toPathCase([String separator = '/']) => _extractComponents().join(separator);
+  String toPathCase([String separator = '/']) =>
+      _extractComponents().join(separator);
 
   /// Converts the string to camelCase.
   /// Example: 'Hello World' -> 'helloWorld'
@@ -58,7 +60,8 @@ extension StringCaseConversionsOnStringX on String {
 
   /// Converts the string to PascalCase.
   /// Example: 'hello world' -> 'HelloWorld'
-  String toPascalCase() => _extractComponents().map((e) => e.capitalize()).join();
+  String toPascalCase() =>
+      _extractComponents().map((e) => e.capitalize()).join();
 
   /// Robustly extracts word components from a string and returns them in lowercase.
   List<String> _extractComponents() {
@@ -68,10 +71,19 @@ extension StringCaseConversionsOnStringX on String {
         .replaceAllMapped(RegExp(r'([a-z])([A-Z])'), (m) => '${m[1]} ${m[2]}')
         // 2. Add a space before an uppercase letter that is followed by a lowercase letter,
         //    effectively splitting acronyms. (e.g., 'HTTPRequest' -> 'HTTP Request')
-        .replaceAllMapped(RegExp(r'([A-Z])([A-Z][a-z])'), (m) => '${m[1]} ${m[2]}')
+        .replaceAllMapped(
+          RegExp(r'([A-Z])([A-Z][a-z])'),
+          (m) => '${m[1]} ${m[2]}',
+        )
         // 3. Add a space between letters and numbers. (e.g., 'version1' -> 'version 1')
-        .replaceAllMapped(RegExp(r'([a-zA-Z])([0-9])'), (m) => '${m[1]} ${m[2]}')
-        .replaceAllMapped(RegExp(r'([0-9])([a-zA-Z])'), (m) => '${m[1]} ${m[2]}')
+        .replaceAllMapped(
+          RegExp(r'([a-zA-Z])([0-9])'),
+          (m) => '${m[1]} ${m[2]}',
+        )
+        .replaceAllMapped(
+          RegExp(r'([0-9])([a-zA-Z])'),
+          (m) => '${m[1]} ${m[2]}',
+        )
         // 4. Replace any non-alphanumeric characters with a space. (e.g., 'hello_world-123' -> 'hello world 123')
         .replaceAll(RegExp(r'[^a-zA-Z0-9]+'), ' ')
         // 5. Split by spaces and filter out any empty strings.

@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.5]
+
+- Released @ 6/2025 (UTC)
+- Make string type conversions more robust
+
 ## [0.2.4]
 
 - Released @ 12/2024 (UTC)
