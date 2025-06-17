@@ -11,110 +11,81 @@
 //.title~
 
 extension StringCaseConversionsOnStringX on String {
-  /// Converts the string to UPPER_SNAKE_CASE;
+  /// Converts the string to UPPER_SNAKE_CASE.
+  /// Example: 'helloWorld' -> 'HELLO_WORLD'
   String toUpperSnakeCase() => toSnakeCase().toUpperCase();
 
   /// Converts the string to lower_snake_case (alias for [toSnakeCase]).
+  /// Example: 'HelloWorld' -> 'hello_world'
   String toLowerSnakeCase() => toSnakeCase();
 
   /// Converts the string to snake_case.
-  String toSnakeCase() {
-    final noUpperCase = isUpperCase ? toLowerCase() : this;
-    return noUpperCase._extractLowercaseComponents().join('_');
-  }
+  String toSnakeCase() => _extractComponents().join('_');
 
-  /// Converts the string to lower-kebab-case.
+  /// Converts the string to UPPER-KEBAB-CASE.
+  /// Example: 'helloWorld' -> 'HELLO-WORLD'
   String toUpperKebabCase() => toKebabCase().toUpperCase();
 
   /// Converts the string to lower-kebab-case (alias for [toKebabCase]).
+  /// Example: 'HelloWorld' -> 'hello-world'
   String toLowerKebabCase() => toKebabCase();
 
   /// Converts the string to kebab-case.
-  String toKebabCase() => _extractLowercaseComponents().join('-');
+  String toKebabCase() => _extractComponents().join('-');
 
   /// Converts the string to Capitalized-Kebab-Case.
-  String toCapitalizedKebabCase() =>
-      _extractLowercaseComponents().map((e) => e.capitalize()).join('-');
+  /// Example: 'helloWorld' -> 'Hello-World'
+  String toCapitalizedKebabCase() => _extractComponents().map((e) => e.capitalize()).join('-');
 
   /// Converts the string to dot.case.
-  String toDotCase() => _extractLowercaseComponents().join('.');
+  String toDotCase() => _extractComponents().join('.');
 
-  /// Converts the string to lower.dot.case. (alias for [toDotCase]).
+  /// Converts the string to lower.dot.case (alias for [toDotCase]).
+  /// Example: 'HelloWorld' -> 'hello.world'
   String toLowerDotCase() => toDotCase();
 
   /// Converts the string to UPPER.DOT.CASE.
+  /// Example: 'HelloWorld' -> 'HELLO.WORLD'
   String toUpperDotCase() => toDotCase().toUpperCase();
 
   /// Converts the string to path/case.
-  String toPathCase([String separator = '/']) => _extractLowercaseComponents().join(separator);
+  /// Example: 'helloWorld' -> 'hello/world'
+  String toPathCase([String separator = '/']) => _extractComponents().join(separator);
 
   /// Converts the string to camelCase.
+  /// Example: 'Hello World' -> 'helloWorld'
   String toCamelCase() => toPascalCase().withFirstLetterAsLowerCase();
 
   /// Converts the string to PascalCase.
-  String toPascalCase() => _extractLowercaseComponents().map((e) => e.capitalize()).join();
+  /// Example: 'hello world' -> 'HelloWorld'
+  String toPascalCase() => _extractComponents().map((e) => e.capitalize()).join();
 
-  /// Extracts and returns a list of lowercase components from the string.
-  ///
-  /// This method identifies components based on transitions between lowercase
-  /// and uppercase letters, between letters and digits, within sequences of
-  /// uppercase letters (including [special] characters), and at any
-  /// non-alphanumeric characters. Each identified component is converted to
-  /// lowercase.
-  ///
-  /// The method is useful for parsing strings formatted in camelCase, PascalCase,
-  /// snake_case, kebab-case, or other mixed-case styles into a list of lowercase words or segments.
-  ///
-  /// Example:
-  /// ```dart
-  /// var example = 'HelloWorld123.456';
-  /// var components = example.extractLowercaseComponents(special = const {'.'});
-  /// print(components); // Output: ['hello', 'world', '123+456']
-  /// ```
-  List<String> _extractLowercaseComponents({
-    Set<String> special = const {'.'},
-  }) {
-    if (isEmpty) return [this];
-    final words = <String>[];
-    var currentWord = StringBuffer();
-    String? a;
-    for (var n = 0; n < length; n++) {
-      final b = this[n];
-      final bIsLetter = b._isLetter || special.contains(b);
-      if (bIsLetter || b._isDigit) {
-        if (a != null) {
-          final aIsLetter = a._isLetter || special.contains(a);
-          if ((a.isLowerCase && b.isUpperCase) ||
-              (a._isDigit && bIsLetter) ||
-              (aIsLetter && b._isDigit) ||
-              (a.isUpperCase && b.isUpperCase && (n + 1 < length && this[n + 1].isLowerCase))) {
-            words.add(currentWord.toString().toLowerCase());
-            currentWord = StringBuffer();
-          }
-        }
-        currentWord.write(b);
-      } else if (currentWord.isNotEmpty) {
-        words.add(currentWord.toString().toLowerCase());
-        currentWord = StringBuffer();
-      }
-      a = b;
-    }
-    if (currentWord.isNotEmpty) {
-      words.add(currentWord.toString().toLowerCase());
-    }
-    return words;
+  /// Robustly extracts word components from a string and returns them in lowercase.
+  List<String> _extractComponents() {
+    if (trim().isEmpty) return []; // Return empty list for empty input
+    return trim()
+        // 1. Add a space before an uppercase letter followed by a lowercase one. (e.g., 'HelloWorld' -> 'Hello World')
+        .replaceAllMapped(RegExp(r'([a-z])([A-Z])'), (m) => '${m[1]} ${m[2]}')
+        // 2. Add a space before an uppercase letter that is followed by a lowercase letter,
+        //    effectively splitting acronyms. (e.g., 'HTTPRequest' -> 'HTTP Request')
+        .replaceAllMapped(RegExp(r'([A-Z])([A-Z][a-z])'), (m) => '${m[1]} ${m[2]}')
+        // 3. Add a space between letters and numbers. (e.g., 'version1' -> 'version 1')
+        .replaceAllMapped(RegExp(r'([a-zA-Z])([0-9])'), (m) => '${m[1]} ${m[2]}')
+        .replaceAllMapped(RegExp(r'([0-9])([a-zA-Z])'), (m) => '${m[1]} ${m[2]}')
+        // 4. Replace any non-alphanumeric characters with a space. (e.g., 'hello_world-123' -> 'hello world 123')
+        .replaceAll(RegExp(r'[^a-zA-Z0-9]+'), ' ')
+        // 5. Split by spaces and filter out any empty strings.
+        .split(' ')
+        .where((s) => s.isNotEmpty)
+        // 6. Convert all components to lowercase.
+        .map((s) => s.toLowerCase())
+        .toList();
   }
 
-  /// Returns `true` if the string is a digit.
-  bool get _isDigit => RegExp(r'^[0-9]$').hasMatch(this);
-
-  /// Returns `true` if the string is a letter.
-  bool get _isLetter => RegExp(r'^[a-zA-Z]$').hasMatch(this);
-
-  /// Returns `true` if the string is all uppercase.
+  /// Returns `true` if the string contains only uppercase letters.
   bool get isUpperCase => this == toUpperCase();
 
-  /// Returns `true` if the string is all lowercase.
+  /// Returns `true` if the string contains only lowercase letters.
   bool get isLowerCase => this == toLowerCase();
 
   /// Capitalizes the first letter of the string.
@@ -127,19 +98,23 @@ extension StringCaseConversionsOnStringX on String {
   /// The same as [capitalize].
   String withFirstLetterAsUpperCase() {
     if (isEmpty) return this;
-    if (length == 1) return toUpperCase();
     return this[0].toUpperCase() + substring(1);
   }
 
   /// Converts the first letter of the string to lowercase.
   String withFirstLetterAsLowerCase() {
     if (isEmpty) return this;
-    if (length == 1) return toLowerCase();
     return this[0].toLowerCase() + substring(1);
   }
 
-  /// Capitalizes each word in the string.
+  /// Capitalizes each word in the string, assuming words are separated by spaces, hyphens, or underscores.
   String withCapitalizedWords() {
-    return trim().split(RegExp(r'[- ]+')).map((e) => e.trim().toLowerCase().capitalize()).join(' ');
+    if (trim().isEmpty) return '';
+    // FIX: Added '_' to the regex to correctly handle snake_case inputs.
+    return trim()
+        .split(RegExp(r'[\s-_]+'))
+        .where((e) => e.isNotEmpty)
+        .map((e) => e.toLowerCase().capitalize())
+        .join(' ');
   }
 }
