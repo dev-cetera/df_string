@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.7]
+
+- Released @ 6/2025 (UTC)
+- Refactor and clean
+
 ## [0.2.6]
 
 - Released @ 6/2025 (UTC)

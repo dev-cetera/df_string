@@ -45,7 +45,8 @@ void main() {
             expect(
               input.toSnakeCase(),
               isEmpty,
-              reason: 'An empty/whitespace input should result in an empty output string.',
+              reason:
+                  'An empty/whitespace input should result in an empty output string.',
             );
           } else {
             // For all non-empty cases, the original logic works perfectly.
