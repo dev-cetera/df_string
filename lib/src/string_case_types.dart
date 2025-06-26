@@ -10,7 +10,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-import 'extensions/string_case_conversions_on_string_x.dart';
+import 'extensions/string_case_conversions_extension.dart';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
@@ -119,7 +119,7 @@ String convertToStringCaseType(String value, StringCaseType? stringCaseType) {
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 
-extension ConvertOnStringCaseTypeX on StringCaseType {
+extension ConvertOnStringCaseTypeExtension on StringCaseType {
   /// Converts [value] to a specific case type.
   String convert(String value) {
     return convertToStringCaseType(value, this);

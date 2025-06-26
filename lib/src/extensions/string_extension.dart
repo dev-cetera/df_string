@@ -10,7 +10,12 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-extension MiscUtilsOnStringX on String {
+extension $StringExtension on String {
+  /// Returns null if the String is empty, otherwise returns the String.
+  String? get nullIfEmpty {
+    return isEmpty ? null : this;
+  }
+
   /// Truncates the string to the given [length]. Specify [ellipsis] to append
   /// to he truncated string if it is shorter than [length], e.g.
   /// 'Hello World'.truncToLength(5, ellipsis: '...') => 'Hello...'.

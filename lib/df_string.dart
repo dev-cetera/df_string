@@ -13,4 +13,4 @@
 /// A package designed to extend Dart strings by offering additional functionality.
 library;
 
-export 'src/_index.g.dart';
+export 'src/_src.g.dart';
