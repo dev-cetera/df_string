@@ -8,6 +8,6 @@
 //.title~
 
 export './string_case_types.dart';
-export './extensions/string_extension.dart';
-export './extensions/string_case_conversions_extension.dart';
+export 'extensions/string_ext.dart';
+export 'extensions/case_conversions_on_string_ext.dart';
 export './force_obj_to_string.dart';

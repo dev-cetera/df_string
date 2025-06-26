@@ -10,7 +10,7 @@
 // ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 //.title~
 
-extension $StringCaseConversionsStringExtension on String {
+extension CaseConversionsOnStringExt on String {
   /// Converts the string to UPPER_SNAKE_CASE.
   /// Example: 'helloWorld' -> 'HELLO_WORLD'
   String toUpperSnakeCase() => toSnakeCase().toUpperCase();

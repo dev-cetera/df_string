@@ -26,7 +26,7 @@ String forceObjToString(Object? obj) {
 }
 
 /// An extension method for conveniently calling [forceObjToString].
-extension ForceObjToStringOnObjectExtension on Object {
+extension ForceObjToStringOnObjectExt on Object {
   /// Safely converts this object to a string. See [forceObjToString].
   String forceObjToString() => _forceObjToString(this);
 }

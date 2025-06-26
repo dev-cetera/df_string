@@ -16,13 +16,13 @@ repository: https://github.com/robmllze/df_string
 funding:
   - https://www.buymeacoffee.com/dev_cetera
 description: A package designed to extend Dart strings by offering additional functionality.
-version: 0.2.6
+version: 0.2.7
 topics:
   - dart
   - json
   - string
   - utility
-  - utils
+  - tool
 
 ## -----------------------------------------------------------------------------
 
