@@ -4,6 +4,7 @@
 
 - Released @ 6/2025 (UTC)
 - Refactor and clean
+- Update docs
 
 ## [0.2.6]
 
