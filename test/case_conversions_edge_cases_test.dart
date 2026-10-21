@@ -164,22 +164,58 @@ void main() {
     });
   });
 
-  group('CaseConversionsOnStringExt — Unicode (documented current behavior)',
-      () {
-    // The component extractor matches ASCII letters/digits only.
-    // Non-ASCII characters are treated as delimiters and stripped.
-    test('accented letters are stripped (ASCII-only matcher)', () {
-      expect('café'.toSnakeCase(), equals('caf'));
-      expect('jalapeño'.toSnakeCase(), equals('jalape_o'));
-      expect('naïve'.toSnakeCase(), equals('na_ve'));
+  group('CaseConversionsOnStringExt — Unicode', () {
+    // Letters, marks and digits of every script are kept; everything else
+    // (punctuation, symbols, emoji, whitespace) is a delimiter.
+    test('accented letters are kept', () {
+      expect('café'.toSnakeCase(), equals('café'));
+      expect('jalapeño'.toSnakeCase(), equals('jalapeño'));
+      expect('naïve'.toSnakeCase(), equals('naïve'));
+      expect('café_au_lait'.toSnakeCase(), equals('café_au_lait'));
+      expect('café_au_lait'.toKebabCase(), equals('café-au-lait'));
+      expect('café_au_lait'.toDotCase(), equals('café.au.lait'));
+      expect('café_au_lait'.toPathCase(), equals('café/au/lait'));
+      expect('café_au_lait'.toUpperSnakeCase(), equals('CAFÉ_AU_LAIT'));
+      expect('café_au_lait'.toCamelCase(), equals('caféAuLait'));
+      expect('café_au_lait'.toPascalCase(), equals('CaféAuLait'));
+      expect(
+        'café_au_lait'.toCapitalizedKebabCase(),
+        equals('Café-Au-Lait'),
+      );
     });
-    test('emoji are stripped', () {
+    test('combining marks (decomposed accents) are kept', () {
+      expect('café_bar'.toSnakeCase(), equals('café_bar'));
+      expect('caféBar'.toSnakeCase(), equals('café_bar'));
+    });
+    test('emoji are delimiters', () {
       expect('hello👋world'.toSnakeCase(), equals('hello_world'));
       expect('🎉party🎉'.toSnakeCase(), equals('party'));
     });
-    test('non-latin scripts (CJK / Cyrillic) are stripped', () {
-      expect('hello世界'.toSnakeCase(), equals('hello'));
-      expect('привет'.toSnakeCase(), equals(''));
+    test('non-latin scripts (CJK / Cyrillic) are kept', () {
+      expect('日本語'.toSnakeCase(), equals('日本語'));
+      expect('日本語'.toPascalCase(), equals('日本語'));
+      expect('hello世界'.toSnakeCase(), equals('hello世界'));
+      expect('привет'.toSnakeCase(), equals('привет'));
+    });
+    test('non-ASCII case boundaries split like ASCII ones', () {
+      expect('überCool'.toSnakeCase(), equals('über_cool'));
+      expect('ПриветМир'.toSnakeCase(), equals('привет_мир'));
+      expect('привет_мир'.toPascalCase(), equals('ПриветМир'));
+      expect('ÜBERCool'.toSnakeCase(), equals('über_cool'));
+      expect('ÉCOLE_NORMALE'.toCamelCase(), equals('écoleNormale'));
+    });
+    test('non-ASCII digits are kept', () {
+      expect('x²_y'.toSnakeCase(), equals('x²_y'));
+      expect('رقم٣'.toSnakeCase(), equals('رقم٣'));
+    });
+    test('capitalize handles letters outside the BMP', () {
+      // U+10428 DESERET SMALL LETTER LONG I upper-cases to U+10400.
+      expect('\u{10428}\u{10428}'.capitalize(), equals('\u{10400}\u{10428}'));
+      expect(
+        '\u{10400}\u{10400}'.withFirstLetterAsLowerCase(),
+        equals('\u{10428}\u{10400}'),
+      );
+      expect('\u{10428}_x'.toPascalCase(), equals('\u{10400}X'));
     });
   });
 

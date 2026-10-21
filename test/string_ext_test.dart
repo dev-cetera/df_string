@@ -80,6 +80,19 @@ void main() {
     });
   });
 
+  group('StringExt1.truncToLength — characters outside the BMP', () {
+    test('never splits a surrogate pair', () {
+      expect('😀😀'.truncToLength(1), equals('😀'));
+      expect('😀😀'.truncToLength(1, ellipsis: '…'), equals('😀…'));
+      expect('a😀b'.truncToLength(2), equals('a😀'));
+    });
+    test('length counts characters (runes), not UTF-16 code units', () {
+      expect('😀😀'.truncToLength(2), equals('😀😀'));
+      expect('😀😀'.truncToLength(2, ellipsis: '…'), equals('😀😀'));
+      expect('😀😀😀'.truncToLength(2, ellipsis: '…'), equals('😀😀…'));
+    });
+  });
+
   group('StringExt1.truncToLength — invalid length', () {
     test('negative length throws RangeError', () {
       expect(() => 'hello'.truncToLength(-1), throwsA(isA<RangeError>()));
@@ -148,6 +161,18 @@ void main() {
     });
     test('replacement at the very start of the string', () {
       expect('!foo'.replaceLast('!', '?'), equals('?foo'));
+    });
+    test('string pattern: the last occurrence may overlap an earlier one', () {
+      expect('aaa'.replaceLast('aa', 'X'), equals('aX'));
+      expect('abababa'.replaceLast('aba', 'X'), equals('ababX'));
+      expect('aaaa'.replaceLast('aa', 'X', 1), equals('aaX'));
+    });
+    test('empty string pattern matches at the end', () {
+      expect('abc'.replaceLast('', 'X'), equals('abcX'));
+    });
+    test('startIndex outside the string throws RangeError', () {
+      expect(() => 'abc'.replaceLast('a', 'X', 4), throwsRangeError);
+      expect(() => 'abc'.replaceLast('a', 'X', -1), throwsRangeError);
     });
   });
 

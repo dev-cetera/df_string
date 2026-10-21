@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.1]
+
+- Released @ 10/2026 (UTC)
+- fix: case conversions (`toSnakeCase`, `toKebabCase`, `toDotCase`, `toPathCase`, `toCamelCase`, `toPascalCase`, `toCapitalizedKebabCase` and their upper/lower variants) keep letters, accent marks and digits of every script instead of deleting every non-ASCII character: `café_au_lait` → `café_au_lait` (was `caf_au_lait`), `日本語` → `日本語` (was empty), `überCool` → `über_cool`. Output for ASCII input is byte-identical to 0.4.0 (pinned by a golden table and a fuzz test against the 0.4.0 implementation). Emoji, symbols and punctuation are still delimiters.
+- fix: `capitalize`, `withFirstLetterAsUpperCase` and `withFirstLetterAsLowerCase` convert a first letter outside the Basic Multilingual Plane instead of leaving it unchanged.
+- fix: `replaceLast` with a `String` pattern replaces the true last occurrence even when it overlaps an earlier one: `'aaa'.replaceLast('aa', 'X')` is `'aX'` (was `'Xa'`). `RegExp` patterns still replace the last non-overlapping match.
+- fix: `truncToLength` counts runes and never splits a surrogate pair: `'😀😀'.truncToLength(1)` is `'😀'` (was half an emoji). **Behavioural change:** for text with characters outside the BMP (e.g. emoji), `length` now counts each such character once rather than as two UTF-16 code units. Output for BMP-only text is unchanged.
+
 ## [0.4.0]
 
 - Released @ 8/2026 (UTC)
