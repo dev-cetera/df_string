@@ -13,13 +13,9 @@
 
 name: df_string
 homepage: https://dev-cetera.com/
-repository: https://github.com/robmllze/df_string
-funding:
-  - https://www.buymeacoffee.com/dev_cetera
-  - https://www.patreon.com/c/robelator
-  - https://github.com/sponsors/robelator
+repository: https://github.com/dev-cetera/df_string
 description: A package designed to extend Dart strings by offering additional functionality.
-version: 0.4.1
+version: 0.5.0
 topics:
   - dart
   - json
