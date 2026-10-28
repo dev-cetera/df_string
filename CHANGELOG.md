@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.1]
+
+- fix: migrate to analyzer-plugin lints, fix CI workflows, format
+
+
 
 ## [0.5.0]
 
